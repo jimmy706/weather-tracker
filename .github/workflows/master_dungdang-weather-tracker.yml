@@ -1,0 +1,51 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy container app to Azure Web App - dungdang-weather-tracker
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to registry
+      uses: docker/login-action@v2
+      with:
+        registry: https://dungdangazurecontainerregistry.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_f144dbc036a04a7b932dc88893d51ead }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_81ddad001a5842feb721a5b7083a0287 }}
+
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        tags: dungdangazurecontainerregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_f144dbc036a04a7b932dc88893d51ead }}/weather-tracker:${{ github.sha }}
+        file: ./Dockerfile
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'dungdang-weather-tracker'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_7420bc2f448648f8b5d7791e020c532b }}
+        images: 'dungdangazurecontainerregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_f144dbc036a04a7b932dc88893d51ead }}/weather-tracker:${{ github.sha }}'
