@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: dungdangazurecontainerregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_f144dbc036a04a7b932dc88893d51ead }}/weather-tracker:${{ github.sha }}
+        tags: ${{ secrets.AzureAppService_ContainerUsername_f144dbc036a04a7b932dc88893d51ead }}/weather-tracker:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
