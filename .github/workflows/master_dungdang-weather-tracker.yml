@@ -48,4 +48,4 @@ jobs:
         app-name: 'dungdang-weather-tracker'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_f0196f09cf8943ac9e0934f7e0706b51 }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_21f726a8ad5e49d8859b274929f93e2e }}/jimmy706/weather-tracker:${{ github.sha }}'
+        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_21f726a8ad5e49d8859b274929f93e2e }}/weather-tracker:${{ github.sha }}'
