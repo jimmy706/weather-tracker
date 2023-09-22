@@ -22,15 +22,15 @@ jobs:
     - name: Log in to registry
       uses: docker/login-action@v2
       with:
-        registry: https://dungdangazurecontainerregistry.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_f144dbc036a04a7b932dc88893d51ead }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_81ddad001a5842feb721a5b7083a0287 }}
+        registry: https://index.docker.io/v1/
+        username: ${{ secrets.AzureAppService_ContainerUsername_21f726a8ad5e49d8859b274929f93e2e }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_a9b893e70c1e4a35b8cdefc37e69be57 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: dungdangazurecontainerregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_f144dbc036a04a7b932dc88893d51ead }}/weather-tracker:${{ github.sha }}
+        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_21f726a8ad5e49d8859b274929f93e2e }}/jimmy706/weather-tracker:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'dungdang-weather-tracker'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_7420bc2f448648f8b5d7791e020c532b }}
-        images: 'dungdangazurecontainerregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_f144dbc036a04a7b932dc88893d51ead }}/weather-tracker:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_f0196f09cf8943ac9e0934f7e0706b51 }}
+        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_21f726a8ad5e49d8859b274929f93e2e }}/jimmy706/weather-tracker:${{ github.sha }}'
