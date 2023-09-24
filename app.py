@@ -1,11 +1,9 @@
-from flask import Flask, request, Response, jsonify
+from flask import Flask, request
 from flask_restx import Api, Resource
 import logging
 from clients import WeatherApiClient
-from opencensus.ext.azure.log_exporter import AzureLogHandler
 
 logger = logging.getLogger(__name__)
-# logger.addHandler(AzureLogHandler())
 
 api = Api()
 
