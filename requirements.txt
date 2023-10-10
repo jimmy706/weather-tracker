@@ -10,3 +10,4 @@ pipenv==2023.9.8
 requests==2.31.0
 urllib3==1.26.16
 virtualenv==20.24.5
+flask-cors==4.0.0

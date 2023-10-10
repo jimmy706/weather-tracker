@@ -1,4 +1,5 @@
 from flask import Flask, request
+from flask_cors import CORS
 from flask_restx import Api, Resource, fields
 import logging
 from clients import WeatherApiClient
@@ -8,6 +9,7 @@ logger = logging.getLogger(__name__)
 api = Api()
 
 app = Flask(__name__)
+CORS(app)
 api.init_app(app)
 
 weather_api_client = WeatherApiClient(logger)
