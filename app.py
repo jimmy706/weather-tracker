@@ -69,3 +69,9 @@ class Weather(Resource):
         days = request.args.get('days')
         json_response = weather_api_client.forcast(q, days)
         return json_response, 200
+
+@api.route('/api/weather/ping', doc={ 'description': 'Check resource health' })
+class PingHealth(Resource):
+    @api.response(200, 'Success', fields.String)
+    def get(self):
+        return 'success', 200
